@@ -9,11 +9,14 @@ public class Produto {
     private final BigDecimal precoUnitario;
 
     public Produto(String codigo, String nome, BigDecimal precoUnitario) {
-        if (precoUnitario == null) {
-            throw new NullPointerException("Preço não pode ser nulo");
+        if (codigo == null || codigo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Código não pode ser nulo ou vazio");
         }
-        if (precoUnitario.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Preço não pode ser negativo");
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
+        }
+        if (precoUnitario == null || precoUnitario.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Preço unitário não pode ser nulo ou negativo");
         }
         
         this.codigo = codigo;
