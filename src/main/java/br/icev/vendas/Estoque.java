@@ -6,20 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Estoque {
-    private final Map<String, Integer> estoque;
-    private final Map<String, Integer> reservas;
-    
-    public Estoque() {
-        this.estoque = new HashMap<>();
-        this.reservas = new HashMap<>();
-    }
+    private final Map<String, Integer> estoque = new HashMap<>();
 
     public void adicionarEstoque(String codigo, int quantidade) throws QuantidadeInvalidaException {
         if (codigo == null || codigo.trim().isEmpty()) {
             throw new IllegalArgumentException("Código não pode ser nulo ou vazio");
         }
         if (quantidade <= 0) {
-            throw new QuantidadeInvalidaException("Quantidade deve ser maior que zero");
+            throw new QuantidadeInvalidaException("Quantidade inválida");
         }
         
         estoque.merge(codigo, quantidade, Integer::sum);
@@ -29,46 +23,31 @@ public class Estoque {
         if (codigo == null || codigo.trim().isEmpty()) {
             throw new IllegalArgumentException("Código não pode ser nulo ou vazio");
         }
-        
-        int estoqueAtual = estoque.getOrDefault(codigo, 0);
-        int reservado = reservas.getOrDefault(codigo, 0);
-        return estoqueAtual - reservado;
+        return estoque.getOrDefault(codigo, 0);
     }
 
-    public void reservar(String codigo, int quantidade)
+    public void reservar(String codigo, int quantidade) 
             throws SemEstoqueException, QuantidadeInvalidaException {
         if (codigo == null || codigo.trim().isEmpty()) {
             throw new IllegalArgumentException("Código não pode ser nulo ou vazio");
         }
         if (quantidade <= 0) {
-            throw new QuantidadeInvalidaException("Quantidade deve ser maior que zero");
+            throw new QuantidadeInvalidaException("Quantidade inválida");
         }
         
         int disponivel = getDisponivel(codigo);
         if (disponivel < quantidade) {
-            throw new SemEstoqueException("Estoque insuficiente para o produto: " + codigo);
+            throw new SemEstoqueException("Sem estoque suficiente");
         }
         
-        reservas.merge(codigo, quantidade, Integer::sum);
+        estoque.put(codigo, disponivel - quantidade);
     }
-    
-    public void liberarReserva(String codigo, int quantidade) {
-        if (codigo != null && reservas.containsKey(codigo)) {
-            int reservaAtual = reservas.get(codigo);
-            int novaReserva = reservaAtual - quantidade;
-            if (novaReserva <= 0) {
-                reservas.remove(codigo);
-            } else {
-                reservas.put(codigo, novaReserva);
-            }
-        }
-    }
-    
+
     public void confirmarReserva(String codigo, int quantidade) {
-        if (codigo != null && estoque.containsKey(codigo)) {
-            int estoqueAtual = estoque.get(codigo);
-            estoque.put(codigo, estoqueAtual - quantidade);
-            liberarReserva(codigo, quantidade);
-        }
+        throw new UnsupportedOperationException("Unimplemented method 'confirmarReserva'");
+    }
+
+    public void liberarReserva(String codigo, int quantidade) {
+        throw new UnsupportedOperationException("Unimplemented method 'liberarReserva'");
     }
 }
