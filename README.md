@@ -1,86 +1,73 @@
-🛒 Sistema de Vendas Java
-Um sistema simples de gerenciamento de vendas desenvolvido em Java para estudo de POO e testes unitários.
+# 🛒 Sistema de Vendas - POO
 
-👥 Integrantes do Grupo
-Ian Brito Ribeiro
+## 👥 Integrantes do Grupo
+- Mateus Moreira Fernandes.
+- Ian Brito Ribeiro de Castro.
+- Caio Vitor Campelo Alcântara.
 
-Mateus Moreira
+## 📋 Funcionalidades do Projeto
+Gestão de Produtos: Criação e manipulação de produtos com código, nome e preço
 
-Caio Vitor Campelo Alcântara
+Carrinho de Compras: Adição de produtos, cálculo de subtotais e aplicação de descontos
 
-🎯 Funcionalidades
-✅ Cadastro de produtos
+Controle de Estoque: Reserva, confirmação e liberação de itens do estoque
 
-✅ Carrinho de compras
+Processamento de Pagamentos: Integração com gateways de pagamento
 
-✅ Controle de estoque
+Gestão de Pedidos: Criação e acompanhamento de pedidos com status
 
-✅ Processamento de vendas
-
-✅ Sistema de descontos
-
-✅ Tratamento de erros
-
-🏗️ Estrutura Principal
+## 🏗️ Estrutura Principal
 Classes Principais
+
 Classe	Função
+
 Produto	Representa um produto para venda
+
 Carrinho	Gerencia os itens do carrinho
+
 Estoque	Controla o estoque dos produtos
+
 ServicoVendas	Processa as vendas completas
+
 Pedido	Representa um pedido finalizado
+
 Exceções Personalizadas
+
 SemEstoqueException - Quando não há estoque suficiente
 
 ErroPagamentoException - Quando o pagamento falha
 
 QuantidadeInvalidaException - Quando a quantidade é inválida
 
-🚀 Como Usar
-
-Exemplo Básico
-java
+## 🚀 Exemplo Rápido
 // Criar produtos
-Produto produto1 = new Produto("P001", "Camiseta", new BigDecimal("29.90"));
-Produto produto2 = new Produto("P002", "Calça", new BigDecimal("89.90"));
 
-// Configurar estoque
+Produto camiseta = new Produto("CAM-01", "Camiseta", new BigDecimal("29.90"));
+
+// Configurar sistema
+
 Estoque estoque = new Estoque();
-estoque.adicionarEstoque("P001", 10);
-estoque.adicionarEstoque("P002", 5);
 
-// Adicionar ao carrinho
+estoque.adicionarEstoque("CAM-01", 10);
+
 Carrinho carrinho = new Carrinho();
-carrinho.adicionar(produto1, 2);
-carrinho.adicionar(produto2, 1);
+
+carrinho.adicionar(camiseta, 2);
 
 // Processar venda
-GatewayPagamento gateway = valor -> "AUTH-123";
-ServicoVendas servico = new ServicoVendas(estoque, gateway);
 
-Pedido pedido = servico.finalizarCompra(carrinho, subtotal -> subtotal);
-🧪 Testes
-O sistema inclui testes para todas as funcionalidades:
+ServicoVendas vendas = new ServicoVendas(estoque, valor -> "PAGO-123");
 
-ProdutoTeste - Testa criação de produtos
+Pedido pedido = vendas.finalizarCompra(carrinho, subtotal -> subtotal);
 
-CarrinhoTeste - Testa o carrinho de compras
+## 🧪 Testes Incluídos
+✅ Produtos
 
-EstoqueTeste - Testa controle de estoque
+✅ Carrinho
 
-CheckoutTeste - Testa fluxo completo de venda
+✅ Estoque
 
-📦 Tecnologias
-Java 8+
+✅ Vendas Completas
 
-JUnit 5 - Para testes unitários
-
-BigDecimal - Para cálculos monetários precisos
-
-🔧 Executando
-bash
-# Compilar
-javac -cp . br/icev/vendas/*.java br/icev/vendas/excecoes/*.java
-
-# Executar testes
-java -cp . org.junit.runner.JUnitCore br.icev.vendas.ProdutoTeste
+## 🛠️ Tecnologias
+Java + JUnit 5 + BigDecimal
