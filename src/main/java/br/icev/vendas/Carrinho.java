@@ -39,8 +39,9 @@ public class Carrinho {
         BigDecimal subtotal = getSubtotal();
         BigDecimal totalComDesconto = politica.aplicar(subtotal);
         
+        // Garantir que nunca seja negativo (conforme teste)
         if (totalComDesconto.compareTo(BigDecimal.ZERO) < 0) {
-            return BigDecimal.ZERO;
+            totalComDesconto = BigDecimal.ZERO;
         }
         
         return UtilDinheiro.arredondar2(totalComDesconto);
@@ -52,6 +53,7 @@ public class Carrinho {
                 .sum();
     }
 
+    // ✅ MÉTODO QUE ESTAVA FALTANDO!
     public Map<String, Integer> getItensPorCodigo() {
         Map<String, Integer> itensPorCodigo = new HashMap<>();
         for (Map.Entry<Produto, Integer> entry : itens.entrySet()) {
