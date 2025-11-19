@@ -15,8 +15,11 @@ public class Produto {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
         }
-        if (precoUnitario == null || precoUnitario.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Preço unitário não pode ser nulo ou negativo");
+        if (precoUnitario == null) {
+            throw new NullPointerException("Preço unitário não pode ser nulo");
+        }
+        if (precoUnitario.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("Preço unitário não pode ser negativo");
         }
         
         this.codigo = codigo;
